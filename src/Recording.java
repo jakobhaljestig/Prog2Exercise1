@@ -17,27 +17,31 @@ public abstract class Recording extends Item implements PriceableWithVAT25 {
     }
 
     public String getArtist() {
-        return this.artist;
-    }
-
-    public abstract String getType();
-
-    public int getCondition() {
-        return this.condition;
+        return artist;
     }
 
     public int getYear() {
-        return this.year;
+        return year;
+    }
+
+    public int getCondition() {
+        return condition;
+    }
+
+    protected double getOriginalPrice() {
+        return price;
     }
 
     @Override
     public double getPrice() {
-        double price = this.price * (this.condition / 10.0);
-        if (price < 10) {
-            price = 10;
+        double adjustedPrice = price * (condition / 10.0);
+        if (adjustedPrice < 10) {
+            adjustedPrice = 10;
         }
-        return price;
+        return adjustedPrice;
     }
+
+    public abstract String getType();
 
     @Override
     public String toString() {
@@ -49,9 +53,5 @@ public abstract class Recording extends Item implements PriceableWithVAT25 {
                 ", original price= " + getOriginalPrice() +
                 ", price=" + getPrice() +
                 ", price+vat=" + getPriceWithVAT() + " }";
-    }
-
-    protected double getOriginalPrice() {
-        return this.price;
     }
 }
